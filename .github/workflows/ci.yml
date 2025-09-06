@@ -8,18 +8,16 @@ on:
 jobs: 
   terraform:
     name: "terraform init-validate-plan"
-    runs-on: BIPIN   # Tumhara self-hosted runner ka label
+    runs-on: [self-hosted, Windows, X64]   # Org-level runner ke exact labels
 
     permissions:
       id-token: write
       contents: read   
 
     steps:
-      # Step 1: Code checkout
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Azure login
       - name: Azure Login
         uses: azure/login@v2
         with:
@@ -27,14 +25,11 @@ jobs:
           tenant-id: 616c4396-4431-416b-bbae-1077a215e05d
           subscription-id: 27e98613-dade-4a46-af43-1ecd0c27e75e
 
-      # Step 3: Terraform init
       - name: Terraform Init
         run: terraform init
 
-      # Step 4: Terraform validate
       - name: Terraform Validate
         run: terraform validate
 
-      # Step 5: Terraform plan
       - name: Terraform Plan
         run: terraform plan
