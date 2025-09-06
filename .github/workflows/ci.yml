@@ -1,1 +1,26 @@
+name: "meriphligithubactionpipeline"
 
+on: 
+  workflow_dispatch:   # Matlab sirf manually chalega, jaise Azure pipeline me trigger: none hota hai
+
+jobs: 
+  terraform:
+    name: "terraform init-validate-plan"
+    runs-on: BIPIN   # Yaha tumhe apne self-hosted runner ka label dena hoga (agar 'BIPIN' rakha hai to sahi hai)
+
+    permissions:
+      id-token: write
+      contents: read   
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
